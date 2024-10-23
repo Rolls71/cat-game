@@ -18,5 +18,14 @@ static func oddq_to_axial(oddq:Vector2i):
 static func axial_direction(direction):
 	return axial_directions[direction]
 
-static func axial_add(axial, vec):
-	return [axial[0] + vec[0], axial[1] + vec[1]]
+static func axial_add(a, b):
+	return [a[0] + b[0], a[1] + b[1]]
+	
+static func axial_subtract(a, b):
+	return [a[0] - b[0], a[1] - b[1]]
+
+static func axial_distance(a, b):
+	var vec = axial_subtract(a, b)
+	return (abs(vec[0]) +
+			abs(vec[0] + vec[1]) +
+			abs(vec[1])) / 2

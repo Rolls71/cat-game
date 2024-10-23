@@ -4,6 +4,10 @@ const SOLID = Vector2i(2,0)
 const OTHER = Vector2i(1,0)
 const WEAK = Vector2i(0,0)
 
+const PLAYER_RANGE = 1
+
+const SPAWN = Vector2i(1, -1)
+
 func _init() -> void:
 	for cell in get_used_cells():
 		var atlas = get_cell_atlas_coords(cell)
@@ -13,8 +17,13 @@ func _init() -> void:
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("primary_click"):
-		var global_clicked = event.position
-		var pos_clicked = local_to_map(to_local(global_clicked))
+		var mouse_pos = get_global_mouse_position()
+		var pos_clicked = local_to_map(to_local(mouse_pos))
+		var player: Node2D = get_node("Player")
+		var a = Hex.oddq_to_axial(local_to_map(player.position))
+		var b = Hex.oddq_to_axial(pos_clicked)
+		if Hex.axial_distance(a, b) > PLAYER_RANGE:
+			return
 		var atlas = get_cell_atlas_coords(pos_clicked)
 		match atlas:
 			SOLID:
@@ -27,12 +36,16 @@ func _input(event: InputEvent) -> void:
 				if weak_count >= 1:
 					weak_count += 1
 				set_cell(pos_clicked, 2, atlas, weak_count)
+				player.position = map_to_local(pos_clicked)
 			WEAK:
 				set_cell(pos_clicked, 2, atlas, 0)
 				for cell in get_used_cells():
 					var cell_atlas = get_cell_atlas_coords(cell)
 					if cell_atlas == SOLID:
 						set_cell(cell, 2, cell_atlas, 1)
+				player.position = map_to_local(SPAWN)
+			OTHER:
+				player.position = map_to_local(pos_clicked)
 				
 			
 			

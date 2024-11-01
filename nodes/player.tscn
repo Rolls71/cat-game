@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dro6ak12vk0xf"]
+
+[ext_resource type="Texture2D" uid="uid://b0ecp776xp4oy" path="res://resources/icon.svg" id="1_7gprk"]
+
+[node name="Player" type="Node2D"]
+position = Vector2(126, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.69, 1.69)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_7gprk")

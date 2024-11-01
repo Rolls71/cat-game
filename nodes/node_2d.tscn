@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://ssn4ywccr51u" path="res://nodes/tile_sets/blocks.tres" id="1_tj83t"]
 [ext_resource type="Script" path="res://nodes/blocks.gd" id="2_3wl78"]
-[ext_resource type="Texture2D" uid="uid://b0ecp776xp4oy" path="res://resources/icon.svg" id="3_xy4v2"]
+[ext_resource type="PackedScene" uid="uid://dro6ak12vk0xf" path="res://nodes/player.tscn" id="3_mb4hv"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -10,13 +10,6 @@
 tile_map_data = PackedByteArray("AAADAAAAAgAAAAAAAAAFAAAAAgACAAAAAAAGAAAAAgACAAAAAAAGAAIAAgACAAAAAAAHAAAAAgACAAAAAAAHAAEAAgACAAAAAAAHAAMAAgACAAAAAAAIAAIAAgAAAAAAAAAJAAAAAgACAAAAAAACAP//AgACAAAAAAACAAAAAgACAAAAAAADAP7/AgACAAAAAAAEAP//AgACAAAAAAAEAAAAAgACAAAAAAAFAP7/AgACAAAAAAAGAP7/AgAAAAAAAAAGAP//AgAAAAAAAAAGAAMAAgACAAAAAAAHAP7/AgAAAAAAAAAHAP//AgACAAAAAAAIAP//AgAAAAAAAAAIAAAAAgACAAAAAAAIAAMAAgACAAAAAAAJAP7/AgAAAAAAAAAJAAEAAgACAAAAAAAKAP//AgAAAAAAAAALAP//AgAAAAAAAAALAAAAAgAAAAAAAAAJAAMAAgACAAAAAAAKAAMAAgACAAAAAAALAAIAAgABAAAAAgALAAEAAgAAAAAAAAAKAAAAAgACAAAAAAABAP//AgABAAAAAwA=")
 tile_set = ExtResource("1_tj83t")
 script = ExtResource("2_3wl78")
+spawn = Vector2i(1, -1)
 
-[node name="Player" type="Node2D" parent="Map"]
-position = Vector2(126, 0)
-
-[node name="Camera2D" type="Camera2D" parent="Map/Player"]
-zoom = Vector2(1.69, 1.69)
-
-[node name="Sprite2D" type="Sprite2D" parent="Map/Player"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_xy4v2")
+[node name="Player" parent="Map" instance=ExtResource("3_mb4hv")]

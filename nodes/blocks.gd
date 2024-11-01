@@ -9,14 +9,13 @@ const DOWN = Vector2i(0, 1)
 
 const PLAYER_RANGE = 1
 
-const SPAWN = Vector2i(1, -1)
+@export var spawn = Vector2i(0, 0)
 
 func _init() -> void:
 	for cell in get_used_cells():
 		var atlas = get_cell_atlas_coords(cell)
 		if atlas != OTHER:
 			set_cell(cell, 2, atlas, 1)
-		
 
 func _input(_event: InputEvent) -> void:
 	var player: Node2D = get_node("Player")
@@ -84,6 +83,6 @@ func move_to(pos: Vector2i, player: Node2D):
 				var cell_atlas = get_cell_atlas_coords(cell)
 				if cell_atlas == SOLID:
 					set_cell(cell, 2, cell_atlas, 1)
-			player.position = map_to_local(SPAWN)
+			player.position = map_to_local(spawn)
 		OTHER:
 			player.position = map_to_local(Vector2i(pos[0], pos[1]))

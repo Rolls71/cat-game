@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=4 uid="uid://b0et1102lb2o6"]
+
+[ext_resource type="TileSet" uid="uid://ssn4ywccr51u" path="res://nodes/tile_sets/blocks.tres" id="1_2cw3u"]
+[ext_resource type="Script" path="res://nodes/blocks.gd" id="2_cpwri"]
+[ext_resource type="PackedScene" uid="uid://dro6ak12vk0xf" path="res://nodes/player.tscn" id="3_gdjgq"]
+
+[node name="Lvl2" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAAAAgABAAAAAwABAP//AgACAAAAAAABAAAAAgACAAAAAAADAP//AgACAAAAAAADAAAAAgACAAAAAAAEAAAAAgACAAAAAAAFAP//AgACAAAAAAAFAAAAAgACAAAAAAAGAAAAAgAAAAAAAAAHAP//AgACAAAAAAAHAAAAAgACAAAAAAD//wAAAgACAAAAAAD/////AgACAAAAAAAIAAAAAgABAAAAAgAJAP//AgACAAAAAAAJAAAAAgACAAAAAAA=")
+tile_set = ExtResource("1_2cw3u")
+script = ExtResource("2_cpwri")
+
+[node name="Player" parent="TileMapLayer" instance=ExtResource("3_gdjgq")]
+position = Vector2(50, 49)

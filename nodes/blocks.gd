@@ -11,6 +11,8 @@ const PLAYER_RANGE = 1
 
 @export var spawn = Vector2i(0, 0)
 
+var is_jumping = false
+
 func _init() -> void:
 	for cell in get_used_cells():
 		var atlas = get_cell_atlas_coords(cell)
@@ -29,35 +31,62 @@ func _input(_event: InputEvent) -> void:
 			return
 		move_to(pos_clicked, player)
 	elif Input.is_action_just_pressed("up"):
-		var target_pos = local_to_map(player.position) + UP
+		var dir_vec = UP
+		if is_jumping:
+			dir_vec = Hex.axial_add(dir_vec, dir_vec)
+			is_jumping = false
+		var target_pos = local_to_map(player.position) + dir_vec
 		move_to(target_pos, player)
 	elif Input.is_action_just_pressed("down"):
-		var target_pos = local_to_map(player.position) + DOWN
+		var dir_vec = DOWN
+		if is_jumping:
+			dir_vec = Hex.axial_add(dir_vec, dir_vec)
+			is_jumping = false
+		var target_pos = local_to_map(player.position) + dir_vec
 		move_to(target_pos, player)
 	elif Input.is_action_just_pressed("right_up"):
+		var dir_vec = Hex.axial_direction(1)
+		if is_jumping:
+			dir_vec = Hex.axial_add(dir_vec, dir_vec)
+			is_jumping = false
 		var target_pos = Hex.axial_to_oddq(Hex.axial_add(
 			Hex.oddq_to_axial(local_to_map(player.position)), 
-			Hex.axial_direction(1)
+			dir_vec
 			))
 		move_to(target_pos, player)
 	elif Input.is_action_just_pressed("right_down"):
+		var dir_vec = Hex.axial_direction(0)
+		if is_jumping:
+			dir_vec = Hex.axial_add(dir_vec, dir_vec)
+			is_jumping = false
 		var target_pos = Hex.axial_to_oddq(Hex.axial_add(
 			Hex.oddq_to_axial(local_to_map(player.position)), 
-			Hex.axial_direction(0)
+			dir_vec
 			))
 		move_to(target_pos, player)
 	elif Input.is_action_just_pressed("left_up"):
+		var dir_vec = Hex.axial_direction(3)
+		if is_jumping:
+			dir_vec = Hex.axial_add(dir_vec, dir_vec)
+			is_jumping = false
 		var target_pos = Hex.axial_to_oddq(Hex.axial_add(
 			Hex.oddq_to_axial(local_to_map(player.position)), 
-			Hex.axial_direction(3)
+			dir_vec
 			))
 		move_to(target_pos, player)
 	elif Input.is_action_just_pressed("left_down"):
+		var dir_vec = Hex.axial_direction(4)
+		if is_jumping:
+			dir_vec = Hex.axial_add(dir_vec, dir_vec)
+			is_jumping = false
 		var target_pos = Hex.axial_to_oddq(Hex.axial_add(
 			Hex.oddq_to_axial(local_to_map(player.position)), 
-			Hex.axial_direction(4)
+			dir_vec
 			))
 		move_to(target_pos, player)
+	elif Input.is_action_just_pressed("jump"):
+		is_jumping = !is_jumping
+		print(is_jumping)
 	
 
 				

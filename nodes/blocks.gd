@@ -33,22 +33,19 @@ func _input(_event: InputEvent) -> void:
 	elif Input.is_action_just_pressed("up"):
 		var dir_vec = UP
 		if is_jumping:
-			dir_vec = Hex.axial_add(dir_vec, dir_vec)
-			is_jumping = false
+			dir_vec *= 2
 		var target_pos = local_to_map(player.position) + dir_vec
 		move_to(target_pos, player)
 	elif Input.is_action_just_pressed("down"):
 		var dir_vec = DOWN
 		if is_jumping:
-			dir_vec = Hex.axial_add(dir_vec, dir_vec)
-			is_jumping = false
+			dir_vec *= 2
 		var target_pos = local_to_map(player.position) + dir_vec
 		move_to(target_pos, player)
 	elif Input.is_action_just_pressed("right_up"):
 		var dir_vec = Hex.axial_direction(1)
 		if is_jumping:
 			dir_vec = Hex.axial_add(dir_vec, dir_vec)
-			is_jumping = false
 		var target_pos = Hex.axial_to_oddq(Hex.axial_add(
 			Hex.oddq_to_axial(local_to_map(player.position)), 
 			dir_vec
@@ -58,7 +55,6 @@ func _input(_event: InputEvent) -> void:
 		var dir_vec = Hex.axial_direction(0)
 		if is_jumping:
 			dir_vec = Hex.axial_add(dir_vec, dir_vec)
-			is_jumping = false
 		var target_pos = Hex.axial_to_oddq(Hex.axial_add(
 			Hex.oddq_to_axial(local_to_map(player.position)), 
 			dir_vec
@@ -68,7 +64,6 @@ func _input(_event: InputEvent) -> void:
 		var dir_vec = Hex.axial_direction(3)
 		if is_jumping:
 			dir_vec = Hex.axial_add(dir_vec, dir_vec)
-			is_jumping = false
 		var target_pos = Hex.axial_to_oddq(Hex.axial_add(
 			Hex.oddq_to_axial(local_to_map(player.position)), 
 			dir_vec
@@ -78,7 +73,6 @@ func _input(_event: InputEvent) -> void:
 		var dir_vec = Hex.axial_direction(4)
 		if is_jumping:
 			dir_vec = Hex.axial_add(dir_vec, dir_vec)
-			is_jumping = false
 		var target_pos = Hex.axial_to_oddq(Hex.axial_add(
 			Hex.oddq_to_axial(local_to_map(player.position)), 
 			dir_vec
@@ -104,8 +98,12 @@ func move_to(pos: Vector2i, player: Node2D):
 						weak_count += 1
 			if weak_count >= 1:
 				weak_count += 1
-			set_cell(pos, 2, atlas, weak_count)
-			player.position = map_to_local(pos)
+			if is_jumping && weak_count > 0:
+				set_cell(pos, 2, atlas, 0)
+				player.position = map_to_local(spawn)
+			else:
+				set_cell(pos, 2, atlas, weak_count)
+				player.position = map_to_local(pos)
 		WEAK:
 			set_cell(pos, 2, atlas, 0)
 			for cell in get_used_cells():
@@ -115,3 +113,6 @@ func move_to(pos: Vector2i, player: Node2D):
 			player.position = map_to_local(spawn)
 		OTHER:
 			player.position = map_to_local(Vector2i(pos[0], pos[1]))
+			
+	# Reset
+	is_jumping = false

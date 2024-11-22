@@ -8,9 +8,12 @@ const UP = Vector2i(0, -1)
 const DOWN = Vector2i(0, 1)
 
 const PLAYER_RANGE = 1
+const PLAYER_LUCK_MULTIPLIER = 0.7
+const PLAYER_LUCK_INITIAL = 1
 
 @export var spawn = Vector2i(0, 0)
 
+var player_luck = PLAYER_LUCK_INITIAL
 var is_jumping = false
 
 func _init() -> void:
@@ -99,20 +102,36 @@ func move_to(pos: Vector2i, player: Node2D):
 			if weak_count >= 1:
 				weak_count += 1
 			if is_jumping && weak_count > 0:
-				set_cell(pos, 2, atlas, 0)
-				player.position = map_to_local(spawn)
+				kill_player(player)
 			else:
 				set_cell(pos, 2, atlas, weak_count)
 				player.position = map_to_local(pos)
 		WEAK:
 			set_cell(pos, 2, atlas, 0)
-			for cell in get_used_cells():
-				var cell_atlas = get_cell_atlas_coords(cell)
-				if cell_atlas == SOLID:
-					set_cell(cell, 2, cell_atlas, 1)
-			player.position = map_to_local(spawn)
+			push_luck(player)
 		OTHER:
 			player.position = map_to_local(Vector2i(pos[0], pos[1]))
 			
 	# Reset
 	is_jumping = false
+	
+func push_luck(player):
+	if randf() > player_luck:
+		# Fail
+		kill_player(player)
+		return false
+	else:
+		# Succeed
+		player_luck *= PLAYER_LUCK_MULTIPLIER
+		
+		# TODO add visual representation
+		print("Luck: " + str(player_luck))
+		return true
+		
+func kill_player(player):
+	player_luck = PLAYER_LUCK_INITIAL
+	player.position = map_to_local(spawn)
+	_init()
+	
+	
+			

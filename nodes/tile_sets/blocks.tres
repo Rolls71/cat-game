@@ -1,6 +1,24 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://ssn4ywccr51u"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://ssn4ywccr51u"]
 
 [ext_resource type="Texture2D" uid="uid://ccs1pqfaqq1q2" path="res://resources/hex_grid.png" id="1_4nkws"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_yr4qg"]
+tile_data = PackedInt32Array(0, 131074, 0, 65536, 2, 0, 131072, 2, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_m5sae"]
+tile_data = PackedInt32Array(0, 2, 0, 65536, 2, 0, 131072, 131074, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_hlmyu"]
+tile_data = PackedInt32Array(0, 2, 0, 65536, 131074, 0, 131072, 2, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_7qjd3"]
+tile_data = PackedInt32Array(65536, 2, 0, 1, 131074, 0, 2, 2, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_3i5vl"]
+tile_data = PackedInt32Array(65536, 131074, 0, 1, 2, 0, 2, 2, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_r8fkw"]
+tile_data = PackedInt32Array(65536, 2, 0, 1, 2, 0, 2, 131074, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1p0gs"]
 texture = ExtResource("1_4nkws")
@@ -39,3 +57,9 @@ tile_shape = 3
 tile_offset_axis = 1
 tile_size = Vector2i(102, 94)
 sources/2 = SubResource("TileSetAtlasSource_1p0gs")
+pattern_0 = SubResource("TileMapPattern_yr4qg")
+pattern_1 = SubResource("TileMapPattern_m5sae")
+pattern_2 = SubResource("TileMapPattern_hlmyu")
+pattern_3 = SubResource("TileMapPattern_7qjd3")
+pattern_4 = SubResource("TileMapPattern_3i5vl")
+pattern_5 = SubResource("TileMapPattern_r8fkw")

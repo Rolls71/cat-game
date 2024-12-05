@@ -29,3 +29,12 @@ static func axial_distance(a, b):
 	return (abs(vec[0]) +
 			abs(vec[0] + vec[1]) +
 			abs(vec[1])) / 2
+			
+static func is_oddq_adjacent(a, b):
+	return is_axial_adjacent(oddq_to_axial(a), oddq_to_axial(b))
+			
+static func is_axial_adjacent(a, b):
+	for direction in axial_directions:
+		if axial_add(a, direction) == b:
+			return true
+	return false
